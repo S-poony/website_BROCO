@@ -1,0 +1,17 @@
+{
+    "name": "broco-website-root",
+    "private": true,
+    "description": "Root folder for BROCO website project. Actual code is in /app.",
+    "workspaces": [
+        "app"
+    ],
+    "scripts": {
+        "dev": "npm --prefix app run dev",
+        "build": "npm --prefix app run build",
+        "install": "npm --prefix app install"
+    },
+    "devDependencies": {
+        "typescript": "^5.7.3",
+        "lucide-react": "^0.562.0"
+    }
+}
