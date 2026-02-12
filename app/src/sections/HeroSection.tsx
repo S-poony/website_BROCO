@@ -160,11 +160,11 @@ export const HeroSection = () => {
       {/* Right Hero Tile */}
       <div 
         ref={tileRef}
-        className="absolute left-[52vw] top-[14vh] w-[44vw] h-[72vh] z-[2] will-change-transform"
+        className="absolute left-[52vw] top-[14vh] w-[72vh] h-[72vh] z-[2] will-change-transform"
       >
         <Tile className="w-full h-full" noHover>
           <img 
-            src="/images/broco_screen.png" 
+            src="/images/layoutMadeEasy.jpg" 
             alt="Creative workspace"
             className="broco-img"
           />
