@@ -45,12 +45,6 @@ export const Navigation: React.FC = () => {
             onClick={() => scrollToSection('features')}
             className="font-display font-medium text-sm link-animated"
           >
-            Features
-          </button>
-          <button 
-            onClick={() => scrollToSection('gallery')}
-            className="font-display font-medium text-sm link-animated"
-          >
             Gallery
           </button>
           <button 
@@ -72,13 +66,12 @@ export const Navigation: React.FC = () => {
 
         {/* CTA */}
         <a 
-          href="https://github.com/s-poony/BROCO/releases"
+          href="https://s-poony.github.io/BROCO/"
           target="_blank"
           rel="noopener noreferrer"
           className="btn-primary text-sm flex items-center gap-2"
         >
-          <Download className="w-4 h-4" />
-          Download
+          Try the demo in your browser
         </a>
       </div>
     </nav>
