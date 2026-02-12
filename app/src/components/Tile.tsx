@@ -8,18 +8,18 @@ interface TileProps {
   noHover?: boolean;
 }
 
-export const Tile: React.FC<TileProps> = ({ 
-  children, 
-  className = '', 
-  hasShadow = true,
-  noHover = false 
+export const Tile: React.FC<TileProps> = ({
+  children,
+  className = '',
+  hasShadow = false,
+  noHover = false
 }) => {
   return (
-    <div 
+    <div
       className={cn(
-        'bg-white border-[3px] border-broco-dark rounded-tile overflow-hidden',
-        hasShadow && 'shadow-tile',
-        !noHover && 'hover:shadow-tile-hover hover:-translate-y-1 transition-all duration-200',
+        'bg-white border border-[var(--color-border)] rounded-none overflow-hidden',
+        hasShadow && 'shadow-sm',
+        !noHover && 'hover:shadow-md hover:-translate-y-0.5 transition-all duration-200',
         className
       )}
     >

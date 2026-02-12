@@ -14,7 +14,7 @@ export const Rule = forwardRef<HTMLDivElement, RuleProps>(
         ref={ref}
         className={cn(
           orientation === 'vertical' ? 'w-[3px]' : 'h-[3px]',
-          light ? 'bg-white/35' : 'bg-broco-dark',
+          light ? 'bg-white/35' : 'bg-[var(--color-border-light)]',
           className
         )}
       />

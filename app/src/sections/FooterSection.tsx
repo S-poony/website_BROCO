@@ -28,7 +28,7 @@ export const FooterSection = () => {
 
     const gsap = window.gsap;
     const ScrollTrigger = window.ScrollTrigger;
-    
+
     gsap.registerPlugin(ScrollTrigger);
 
     // CTA reveal
@@ -73,30 +73,30 @@ export const FooterSection = () => {
   };
 
   return (
-    <footer 
+    <footer
       ref={sectionRef}
       className="w-full bg-broco-dark py-[10vh]"
     >
       {/* Modal for License/Privacy */}
       {showModal && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/70 z-[200] flex items-center justify-center p-4"
           onClick={() => setShowModal(null)}
         >
-          <div 
-            className="bg-broco-bg rounded-tile p-8 max-w-md w-full border-[3px] border-broco-dark"
+          <div
+            className="bg-broco-bg p-8 max-w-md w-full border border-[var(--color-border)]"
             onClick={(e) => e.stopPropagation()}
           >
             <h3 className="font-display font-bold text-xl text-broco-text mb-4">
               {showModal === 'license' ? 'License' : 'Privacy Policy'}
             </h3>
             <p className="body-text text-broco-textSecondary mb-6">
-              BROCO is open source and does not collect any user data. 
-              However, we haven&apos;t had the legal work done to write proper 
-              {showModal === 'license' ? ' license ' : ' privacy policy '} 
+              BROCO is open source and does not collect any user data.
+              However, we haven&apos;t had the legal work done to write proper
+              {showModal === 'license' ? ' license ' : ' privacy policy '}
               sections yet. Check back soon!
             </p>
-            <button 
+            <button
               onClick={() => setShowModal(null)}
               className="btn-primary"
             >
@@ -116,7 +116,7 @@ export const FooterSection = () => {
             <p className="body-text text-white/70 mb-6">
               Get the latest release, or try the web demo.
             </p>
-            
+
             {/* Email Form */}
             <form onSubmit={handleSubmit} className="flex gap-3">
               <input
@@ -124,7 +124,7 @@ export const FooterSection = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email address"
-                className="flex-1 bg-white/10 border border-white/20 rounded-full px-5 py-3 text-white placeholder:text-white/50 font-body text-sm focus:outline-none focus:border-broco-accent transition-colors"
+                className="flex-1 bg-white/10 border border-white/20 px-5 py-3 text-white placeholder:text-white/50 font-sans text-sm focus:outline-none focus:border-[var(--color-primary)] transition-colors"
                 required
               />
               <button
@@ -171,19 +171,19 @@ export const FooterSection = () => {
             © {new Date().getFullYear()} BROCO Team
           </p>
           <div className="flex items-center gap-6">
-            <button 
+            <button
               onClick={() => setShowModal('license')}
               className="font-mono text-xs text-white/50 hover:text-white transition-colors"
             >
               License
             </button>
-            <button 
+            <button
               onClick={() => setShowModal('privacy')}
               className="font-mono text-xs text-white/50 hover:text-white transition-colors"
             >
               Privacy
             </button>
-            <a 
+            <a
               href="https://github.com/s-poony/BROCO"
               target="_blank"
               rel="noopener noreferrer"

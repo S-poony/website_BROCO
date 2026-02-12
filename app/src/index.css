@@ -4,146 +4,178 @@
 
 @layer base {
   :root {
-    --background: 40 14% 96%;
-    --foreground: 240 6% 4%;
+    /* Colors from reference */
+    --color-primary: hsl(224, 30%, 60%);
+    --color-primary-hover: hsl(224, 40%, 50%);
+    --color-ui-white: #ffffff;
+    --color-ui-base: #f9fafb;
+    --color-ui-medium: #f3f4f6;
+    --color-ui-hover: #e5e7eb;
+    --color-text-title: #111827;
+    --color-text-body: #374151;
+    --color-text-soft: #6b7280;
+    --color-text-dimmed: #9ca3af;
+    --color-border: #d1d5db;
+    --color-border-light: #e5e7eb;
+
+    /* Shadcn/UI mappings */
+    --background: 210 20% 98%;
+    /* Derived from --color-ui-base #f9fafb */
+    --foreground: 224 71.4% 4.1%;
     --card: 0 0% 100%;
-    --card-foreground: 240 6% 4%;
+    --card-foreground: 224 71.4% 4.1%;
     --popover: 0 0% 100%;
-    --popover-foreground: 240 6% 4%;
-    --primary: 220 100% 59%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 40 14% 96%;
-    --secondary-foreground: 240 6% 4%;
-    --muted: 40 14% 92%;
-    --muted-foreground: 240 3% 46%;
-    --accent: 220 100% 59%;
-    --accent-foreground: 0 0% 100%;
+    --popover-foreground: 224 71.4% 4.1%;
+    --primary: 224 30% 60%;
+    --primary-foreground: 210 20% 98%;
+    --secondary: 220 14.3% 95.9%;
+    --secondary-foreground: 220.9 39.3% 11%;
+    --muted: 220 14.3% 95.9%;
+    --muted-foreground: 220 8.9% 46.1%;
+    --accent: 224 30% 60%;
+    --accent-foreground: 220.9 39.3% 11%;
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 6% 4%;
-    --input: 240 5.9% 90%;
-    --ring: 220 100% 59%;
-    --radius: 0.625rem;
+    --destructive-foreground: 210 20% 98%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 224 30% 60%;
+    --radius: 0px;
+
+    /* Layout */
+    --header-height: 60px;
+    --sidebar-width: 280px;
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   }
 }
 
 @layer base {
   * {
     @apply border-border;
+    border-radius: 0 !important;
   }
-  
+
   html {
     scroll-behavior: auto;
   }
-  
+
   body {
-    @apply bg-broco-bg text-broco-text font-body antialiased;
+    @apply bg-[var(--color-ui-base)] text-[var(--color-text-body)] font-sans antialiased;
     overflow-x: hidden;
   }
-  
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-display font-semibold tracking-tight;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-sans font-bold tracking-tight text-[var(--color-text-title)];
   }
 }
 
 @layer components {
+
   /* BROCO Tile Component */
   .broco-tile {
-    @apply bg-white border-[3px] border-broco-dark rounded-tile;
-    box-shadow: 0 18px 0 rgba(11,11,13,0.10);
-    transition: transform 0.2s ease;
+    @apply bg-white border border-[var(--color-border)] rounded-none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease;
   }
-  
+
   .broco-tile:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 22px 0 rgba(11,11,13,0.14);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   }
-  
+
   /* BROCO Rule Component */
   .broco-rule-v {
-    @apply w-[3px] bg-broco-dark;
+    @apply w-[1px] bg-[var(--color-border-light)];
   }
-  
+
   .broco-rule-h {
-    @apply h-[3px] bg-broco-dark;
+    @apply h-[1px] bg-[var(--color-border-light)];
   }
-  
+
   /* Button Styles */
   .btn-primary {
-    @apply bg-broco-accent text-white font-display font-semibold px-6 py-3 rounded-full;
-    @apply hover:translate-y-[-2px] hover:scale-[1.02] active:scale-[0.98];
+    @apply bg-[var(--color-primary)] text-white font-sans font-semibold px-5 py-2.5 rounded-none border-none;
+    @apply hover:bg-[var(--color-primary-hover)] active:scale-[0.98];
     @apply transition-all duration-200;
   }
-  
+
   .btn-secondary {
-    @apply bg-transparent text-broco-text font-display font-medium px-6 py-3 rounded-full;
-    @apply border-2 border-broco-dark;
-    @apply hover:translate-y-[-2px] hover:bg-broco-dark hover:text-white;
+    @apply bg-[var(--color-ui-medium)] text-[var(--color-text-body)] font-sans font-medium px-5 py-2.5 rounded-none;
+    @apply border border-[var(--color-border)];
+    @apply hover:bg-[var(--color-ui-hover)] active:scale-[0.98];
     @apply transition-all duration-200;
   }
-  
+
   /* Link Underline Animation */
   .link-animated {
-    @apply relative inline-block;
+    @apply relative inline-block text-[var(--color-primary)];
   }
-  
+
   .link-animated::after {
     content: '';
-    @apply absolute bottom-0 left-0 w-full h-[2px] bg-current;
+    @apply absolute bottom-0 left-0 w-full h-[1px] bg-current;
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.3s ease;
   }
-  
+
   .link-animated:hover::after {
     transform: scaleX(1);
   }
-  
+
   /* Noise Overlay */
   .noise-overlay {
     @apply fixed inset-0 pointer-events-none z-50;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-    opacity: 0.04;
+    opacity: 0.03;
     mix-blend-mode: multiply;
   }
-  
+
   /* Section Base */
   .section-pinned {
     @apply w-screen h-screen relative overflow-hidden;
   }
-  
+
   /* Images - no rounded corners */
   .broco-img {
-    @apply w-full h-full object-cover;
+    @apply w-full h-full object-cover rounded-none;
     border-radius: 0 !important;
   }
-  
+
   /* Typography */
   .headline-xl {
+    @apply font-sans font-bold;
     font-size: clamp(44px, 5vw, 76px);
-    line-height: 0.95;
-    letter-spacing: -0.02em;
-  }
-  
-  .headline-lg {
-    font-size: clamp(32px, 3.6vw, 56px);
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-  }
-  
-  .headline-md {
-    font-size: clamp(24px, 2.4vw, 36px);
     line-height: 1.1;
     letter-spacing: -0.01em;
   }
-  
+
+  .headline-lg {
+    @apply font-sans font-bold;
+    font-size: clamp(32px, 3.6vw, 56px);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+
+  .headline-md {
+    @apply font-sans font-bold;
+    font-size: clamp(24px, 2.4vw, 36px);
+    line-height: 1.2;
+  }
+
   .body-text {
+    @apply font-sans;
     font-size: clamp(14px, 1.1vw, 18px);
     line-height: 1.6;
+    color: var(--color-text-body);
   }
-  
+
   .label-mono {
-    @apply font-mono text-xs uppercase tracking-[0.08em] text-broco-textSecondary;
+    @apply font-mono text-xs uppercase tracking-[0.12em] text-[var(--color-text-soft)];
   }
 }
 
@@ -155,7 +187,10 @@
 
 /* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
