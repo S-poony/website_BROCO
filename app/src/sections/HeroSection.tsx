@@ -133,10 +133,10 @@ export const HeroSection = () => {
         {/* Headline */}
         <div ref={headlineRef} className="mb-8">
           <h1 className="headline-xl font-display font-bold text-broco-text">
-            <span className="headline-line block">Beautiful</span>
-            <span className="headline-line block">Rows &</span>
+            <span className="headline-line block"><span className="text-broco-accent">B</span>eautiful</span>
+            <span className="headline-line block"><span className="text-broco-accent">Ro</span>ws &</span>
             <span className="headline-line block">
-              Columns<span className="text-broco-accent">.</span>
+              <span className="text-broco-accent">Co</span>lumns<span className="text-broco-accent">.</span>
             </span>
           </h1>
         </div>
