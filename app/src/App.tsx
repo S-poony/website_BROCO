@@ -6,13 +6,7 @@ import { Navigation } from '@/components/Navigation';
 
 // Sections
 import { HeroSection } from '@/sections/HeroSection';
-import { FeatureHighlightSection } from '@/sections/FeatureHighlightSection';
-import { ThreeUpFeatures } from '@/sections/ThreeUpFeatures';
-import { DeepFeatureSection } from '@/sections/DeepFeatureSection';
-import { WorkflowSection } from '@/sections/WorkflowSection';
 import { GalleryMosaicSection } from '@/sections/GalleryMosaicSection';
-import { DarkFeatureSection } from '@/sections/DarkFeatureSection';
-import { TestimonialsSection } from '@/sections/TestimonialsSection';
 import { FooterSection } from '@/sections/FooterSection';
 
 // Type for ScrollTrigger instance
@@ -109,28 +103,10 @@ function App() {
         {/* Section 1: Hero - pin: true */}
         <HeroSection />
 
-        {/* Section 2: Feature Highlight - pin: true */}
-        <FeatureHighlightSection />
-
-        {/* Section 3: Three-Up Features - pin: false */}
-        <ThreeUpFeatures />
-
-        {/* Section 4: Deep Feature - pin: true */}
-        <DeepFeatureSection />
-
-        {/* Section 5: Workflow - pin: true */}
-        <WorkflowSection />
-
-        {/* Section 6: Gallery Mosaic - pin: true */}
+        {/* Section 2: Gallery Mosaic - pin: true */}
         <GalleryMosaicSection />
 
-        {/* Section 7: Dark Feature - pin: true */}
-        <DarkFeatureSection />
-
-        {/* Section 8: Testimonials - pin: true */}
-        <TestimonialsSection />
-
-        {/* Section 9: Footer - pin: false */}
+        {/* Section 3: Footer - pin: false */}
         <FooterSection />
       </main>
     </div>

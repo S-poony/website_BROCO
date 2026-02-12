@@ -164,7 +164,7 @@ export const HeroSection = () => {
       >
         <Tile className="w-full h-full" noHover>
           <img 
-            src="/images/hero_lifestyle.jpg" 
+            src="/images/broco_screen.png" 
             alt="Creative workspace"
             className="broco-img"
           />
