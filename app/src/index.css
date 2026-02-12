@@ -1,0 +1,163 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 40 14% 96%;
+    --foreground: 240 6% 4%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 6% 4%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 6% 4%;
+    --primary: 220 100% 59%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 40 14% 96%;
+    --secondary-foreground: 240 6% 4%;
+    --muted: 40 14% 92%;
+    --muted-foreground: 240 3% 46%;
+    --accent: 220 100% 59%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 6% 4%;
+    --input: 240 5.9% 90%;
+    --ring: 220 100% 59%;
+    --radius: 0.625rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  html {
+    scroll-behavior: auto;
+  }
+  
+  body {
+    @apply bg-broco-bg text-broco-text font-body antialiased;
+    overflow-x: hidden;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-semibold tracking-tight;
+  }
+}
+
+@layer components {
+  /* BROCO Tile Component */
+  .broco-tile {
+    @apply bg-white border-[3px] border-broco-dark rounded-tile;
+    box-shadow: 0 18px 0 rgba(11,11,13,0.10);
+    transition: transform 0.2s ease;
+  }
+  
+  .broco-tile:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 22px 0 rgba(11,11,13,0.14);
+  }
+  
+  /* BROCO Rule Component */
+  .broco-rule-v {
+    @apply w-[3px] bg-broco-dark;
+  }
+  
+  .broco-rule-h {
+    @apply h-[3px] bg-broco-dark;
+  }
+  
+  /* Button Styles */
+  .btn-primary {
+    @apply bg-broco-accent text-white font-display font-semibold px-6 py-3 rounded-full;
+    @apply hover:translate-y-[-2px] hover:scale-[1.02] active:scale-[0.98];
+    @apply transition-all duration-200;
+  }
+  
+  .btn-secondary {
+    @apply bg-transparent text-broco-text font-display font-medium px-6 py-3 rounded-full;
+    @apply border-2 border-broco-dark;
+    @apply hover:translate-y-[-2px] hover:bg-broco-dark hover:text-white;
+    @apply transition-all duration-200;
+  }
+  
+  /* Link Underline Animation */
+  .link-animated {
+    @apply relative inline-block;
+  }
+  
+  .link-animated::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-full h-[2px] bg-current;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+  
+  .link-animated:hover::after {
+    transform: scaleX(1);
+  }
+  
+  /* Noise Overlay */
+  .noise-overlay {
+    @apply fixed inset-0 pointer-events-none z-50;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.04;
+    mix-blend-mode: multiply;
+  }
+  
+  /* Section Base */
+  .section-pinned {
+    @apply w-screen h-screen relative overflow-hidden;
+  }
+  
+  /* Images - no rounded corners */
+  .broco-img {
+    @apply w-full h-full object-cover;
+    border-radius: 0 !important;
+  }
+  
+  /* Typography */
+  .headline-xl {
+    font-size: clamp(44px, 5vw, 76px);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+  }
+  
+  .headline-lg {
+    font-size: clamp(32px, 3.6vw, 56px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  
+  .headline-md {
+    font-size: clamp(24px, 2.4vw, 36px);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+  
+  .body-text {
+    font-size: clamp(14px, 1.1vw, 18px);
+    line-height: 1.6;
+  }
+  
+  .label-mono {
+    @apply font-mono text-xs uppercase tracking-[0.08em] text-broco-textSecondary;
+  }
+}
+
+@layer utilities {
+  .will-change-transform {
+    will-change: transform;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
