@@ -1,0 +1,52 @@
+:root {
+    /* Colors */
+    --color-primary: hsl(224, 30%, 60%);
+    --color-primary-hover: hsl(224, 40%, 50%);
+
+    /* UI Palette */
+    --color-ui-white: #ffffff;
+    --color-ui-base: #f9fafb;
+    --color-ui-medium: #f3f4f6;
+    --color-ui-hover: #e5e7eb;
+
+    /* Text Palette */
+    --color-text-title: #111827;
+    --color-text-body: #374151;
+    --color-text-soft: #6b7280;
+    --color-text-dimmed: #9ca3af;
+
+    --color-border: #d1d5db;
+    --color-border-light: #e5e7eb;
+
+    /* Semantic Colors */
+    --color-danger: #ef4444;
+    --color-danger-hover: #dc2626;
+    --color-delete: #ff6964;
+
+    /* Layout */
+    --header-height: 60px;
+    --sidebar-width: 280px;
+    --breakpoint-laptop: 1024px;
+    --divider-hit-target-min: 25px;
+
+    /* Fonts */
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow-paper: 0px 0px 5px rgba(0, 0, 0, 0.2);
+
+    /* Z-Index */
+    --z-dropdown: 50;
+    --z-modal: 100;
+    --z-tooltip: 150;
+
+    /* Proportional Scaling Ratios */
+    --default-divider-ratio: 0.005;
+    --default-text-ratio: 0.02;
+    --btn-size-ratio: 0.045;
+    --btn-offset-ratio: 0.012;
+    --icon-size-ratio: 0.03;
+}
