@@ -33,7 +33,7 @@ export const ThreeUpFeatures = () => {
 
     const gsap = window.gsap;
     const ScrollTrigger = window.ScrollTrigger;
-    
+
     gsap.registerPlugin(ScrollTrigger);
 
     // Heading reveal
@@ -70,18 +70,23 @@ export const ThreeUpFeatures = () => {
     });
 
     return () => {
-      ScrollTrigger.getAll().forEach((st: { kill: () => void }) => st.kill());
+      const allTriggers = ScrollTrigger.getAll();
+      allTriggers.forEach((st: any) => {
+        if (st.trigger === heading || cards.includes(st.trigger as HTMLDivElement)) {
+          st.kill();
+        }
+      });
     };
   }, []);
 
   return (
-    <section 
+    <section
       ref={sectionRef}
       className="w-full bg-broco-bg py-[10vh]"
     >
       <div className="w-[92vw] mx-auto">
         {/* Heading */}
-        <h2 
+        <h2
           ref={headingRef}
           className="headline-lg font-display font-bold text-broco-text text-center mb-[6vh]"
         >

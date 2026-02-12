@@ -39,7 +39,7 @@ function App() {
     const timer = setTimeout(() => {
       const gsap = window.gsap;
       const ScrollTrigger = window.ScrollTrigger;
-      
+
       if (!gsap || !ScrollTrigger) return;
 
       // Get all pinned ScrollTriggers
@@ -49,7 +49,7 @@ function App() {
         .sort((a: ScrollTriggerInstance, b: ScrollTriggerInstance) => a.start - b.start);
 
       const maxScroll = ScrollTrigger.maxScroll(window);
-      
+
       if (!maxScroll || pinned.length === 0) return;
 
       // Build ranges and snap targets from actual pinned sections
@@ -67,14 +67,14 @@ function App() {
             const inPinned = pinnedRanges.some(
               (r: PinnedRange) => value >= r.start - 0.02 && value <= r.end + 0.02
             );
-            
+
             // If not in a pinned section, allow free scroll
             if (!inPinned) return value;
 
             // Find nearest pinned center
             const target = pinnedRanges.reduce((closest: number, r: PinnedRange) =>
-              Math.abs(r.center - value) < Math.abs(closest - value) 
-                ? r.center 
+              Math.abs(r.center - value) < Math.abs(closest - value)
+                ? r.center
                 : closest,
               pinnedRanges[0]?.center ?? 0
             );
@@ -86,6 +86,9 @@ function App() {
           ease: 'power2.out',
         }
       });
+
+      // Refresh to ensure all pin-spacers and positions are correct
+      ScrollTrigger.refresh();
     }, 500);
 
     return () => {
@@ -97,36 +100,36 @@ function App() {
     <div className="relative">
       {/* Noise Overlay */}
       <div className="noise-overlay" />
-      
+
       {/* Navigation */}
       <Navigation />
-      
+
       {/* Main Content */}
       <main className="relative">
         {/* Section 1: Hero - pin: true */}
         <HeroSection />
-        
+
         {/* Section 2: Feature Highlight - pin: true */}
         <FeatureHighlightSection />
-        
+
         {/* Section 3: Three-Up Features - pin: false */}
         <ThreeUpFeatures />
-        
+
         {/* Section 4: Deep Feature - pin: true */}
         <DeepFeatureSection />
-        
+
         {/* Section 5: Workflow - pin: true */}
         <WorkflowSection />
-        
+
         {/* Section 6: Gallery Mosaic - pin: true */}
         <GalleryMosaicSection />
-        
+
         {/* Section 7: Dark Feature - pin: true */}
         <DarkFeatureSection />
-        
-        {/* Section 8: Testimonials - pin: false */}
+
+        {/* Section 8: Testimonials - pin: true */}
         <TestimonialsSection />
-        
+
         {/* Section 9: Footer - pin: false */}
         <FooterSection />
       </main>

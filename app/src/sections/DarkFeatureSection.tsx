@@ -27,7 +27,7 @@ export const DarkFeatureSection = () => {
 
     const gsap = window.gsap;
     const ScrollTrigger = window.ScrollTrigger;
-    
+
     gsap.registerPlugin(ScrollTrigger);
 
     const scrollTl = gsap.timeline({
@@ -42,51 +42,51 @@ export const DarkFeatureSection = () => {
 
     // ENTRANCE (0% - 30%)
     scrollTl
-      .fromTo(rule, 
-        { scaleY: 0 }, 
-        { scaleY: 1, ease: 'none', transformOrigin: 'top' }, 
+      .fromTo(rule,
+        { scaleY: 0 },
+        { scaleY: 1, ease: 'none', transformOrigin: 'top' },
         0
       )
-      .fromTo(tile, 
-        { x: '60vw', opacity: 0, scale: 0.97 }, 
-        { x: 0, opacity: 1, scale: 1, ease: 'none' }, 
+      .fromTo(tile,
+        { x: '60vw', opacity: 0, scale: 0.97 },
+        { x: 0, opacity: 1, scale: 1, ease: 'none' },
         0
       )
-      .fromTo(text, 
-        { x: '-18vw', opacity: 0 }, 
-        { x: 0, opacity: 1, ease: 'none' }, 
+      .fromTo(text,
+        { x: '-18vw', opacity: 0 },
+        { x: 0, opacity: 1, ease: 'none' },
         0.05
       )
-      .fromTo(cta, 
-        { y: 14, opacity: 0 }, 
-        { y: 0, opacity: 1, ease: 'none' }, 
+      .fromTo(cta,
+        { y: 14, opacity: 0 },
+        { y: 0, opacity: 1, ease: 'none' },
         0.1
       );
 
     // Set to 30%
     scrollTl.to({}, {}, 0.3);
 
-    // EXIT (70% - 100%)
+    // EXIT (60% - 100%)
     scrollTl
-      .fromTo(text, 
-        { x: 0, opacity: 1 }, 
-        { x: '-12vw', opacity: 0, ease: 'power2.in' }, 
-        0.7
+      .fromTo(text,
+        { x: 0, opacity: 1 },
+        { x: '-12vw', opacity: 0, ease: 'power2.in', duration: 0.4 },
+        0.6
       )
-      .fromTo(tile, 
-        { x: 0, opacity: 1 }, 
-        { x: '14vw', opacity: 0, ease: 'power2.in' }, 
-        0.7
+      .fromTo(tile,
+        { x: 0, opacity: 1 },
+        { x: '14vw', opacity: 0, ease: 'power2.in', duration: 0.4 },
+        0.6
       )
-      .fromTo(rule, 
-        { scaleY: 1, opacity: 1 }, 
-        { scaleY: 0.2, opacity: 0, ease: 'power2.in' }, 
-        0.7
+      .fromTo(rule,
+        { scaleY: 1, opacity: 1 },
+        { scaleY: 0.2, opacity: 0, ease: 'power2.in', duration: 0.4 },
+        0.6
       )
-      .fromTo(cta, 
-        { opacity: 1 }, 
-        { opacity: 0, ease: 'power2.in' }, 
-        0.75
+      .fromTo(cta,
+        { opacity: 1 },
+        { opacity: 0, ease: 'power2.in', duration: 0.35 },
+        0.65
       );
 
     return () => {
@@ -98,21 +98,21 @@ export const DarkFeatureSection = () => {
   }, []);
 
   return (
-    <section 
+    <section
       ref={sectionRef}
       id="download"
       className="section-pinned bg-broco-dark flex items-center justify-center"
     >
       {/* Vertical Rule - lower z-index */}
-      <Rule 
+      <Rule
         ref={ruleRef}
-        orientation="vertical" 
+        orientation="vertical"
         className="absolute left-1/2 top-[10vh] h-[80vh] -translate-x-1/2 z-[1]"
         light
       />
 
       {/* Left Text */}
-      <div 
+      <div
         ref={textRef}
         className="absolute left-[6vw] top-[24vh] w-[40vw] z-[3] will-change-transform"
       >
@@ -120,13 +120,13 @@ export const DarkFeatureSection = () => {
           Built for<br />speed.
         </h2>
         <p className="body-text text-white/70 mb-8">
-          Keyboard-first controls, instant splits, and a layout engine that 
+          Keyboard-first controls, instant splits, and a layout engine that
           stays out of your way.
         </p>
-        
+
         {/* CTA */}
         <div ref={ctaRef} className="flex items-center gap-4 will-change-transform">
-          <a 
+          <a
             href="https://github.com/s-poony/BROCO/releases"
             target="_blank"
             rel="noopener noreferrer"
@@ -135,7 +135,7 @@ export const DarkFeatureSection = () => {
             <Download className="w-5 h-5" />
             Download BROCO
           </a>
-          <a 
+          <a
             href="https://youtu.be/cvfVd9Yq398"
             target="_blank"
             rel="noopener noreferrer"
@@ -148,13 +148,13 @@ export const DarkFeatureSection = () => {
       </div>
 
       {/* Right Tile */}
-      <div 
+      <div
         ref={tileRef}
         className="absolute left-[52vw] top-[16vh] w-[42vw] h-[68vh] z-[2] will-change-transform"
       >
         <Tile className="w-full h-full" noHover>
-          <img 
-            src="/images/dark_feature_lifestyle.jpg" 
+          <img
+            src="/images/dark_feature_lifestyle.jpg"
             alt="Designer working late"
             className="broco-img"
           />

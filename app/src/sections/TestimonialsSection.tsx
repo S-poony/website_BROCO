@@ -23,76 +23,98 @@ const testimonials = [
   },
 ];
 
+// Type for ScrollTrigger instance
+interface ScrollTriggerInstance {
+  trigger?: unknown;
+  kill: () => void;
+}
+
 export const TestimonialsSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
+  const cardsContainerRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useLayoutEffect(() => {
+    const section = sectionRef.current;
     const heading = headingRef.current;
+    const cardsContainer = cardsContainerRef.current;
     const cards = cardsRef.current.filter(Boolean);
 
-    if (!heading || cards.length === 0) return;
+    if (!section || !heading || !cardsContainer || cards.length === 0) return;
 
     const gsap = window.gsap;
     const ScrollTrigger = window.ScrollTrigger;
-    
+
     gsap.registerPlugin(ScrollTrigger);
 
-    // Heading reveal
-    gsap.fromTo(heading,
-      { y: 20, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        scrollTrigger: {
-          trigger: heading,
-          start: 'top 80%',
-          end: 'top 55%',
-          scrub: 0.5,
-        }
+    const scrollTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: 'top top',
+        end: '+=130%',
+        pin: true,
+        scrub: 0.6,
       }
-    );
-
-    // Cards stagger reveal
-    cards.forEach((card) => {
-      gsap.fromTo(card,
-        { y: '8vh', opacity: 0, scale: 0.98 },
-        {
-          y: 0,
-          opacity: 1,
-          scale: 1,
-          scrollTrigger: {
-            trigger: card,
-            start: 'top 85%',
-            end: 'top 55%',
-            scrub: 0.5,
-          }
-        }
-      );
     });
 
+    // ENTRANCE (0% - 30%)
+    scrollTl
+      .fromTo(heading,
+        { y: 40, opacity: 0 },
+        { y: 0, opacity: 1, ease: 'none' },
+        0
+      )
+      .fromTo(cards,
+        { y: 60, opacity: 0, scale: 0.98 },
+        { y: 0, opacity: 1, scale: 1, stagger: 0.05, ease: 'none' },
+        0.05
+      );
+
+    // PAUSE (30% - 70%)
+    scrollTl.to({}, {}, 0.3);
+
+    // EXIT (70% - 100%)
+    scrollTl
+      .fromTo(heading,
+        { y: 0, opacity: 1 },
+        { y: -30, opacity: 0, ease: 'power2.in' },
+        0.7
+      )
+      .fromTo(cardsContainer,
+        { y: 0, opacity: 1 },
+        { y: -40, opacity: 0, ease: 'power2.in' },
+        0.7
+      );
+
     return () => {
-      ScrollTrigger.getAll().forEach((st: { kill: () => void }) => st.kill());
+      const allTriggers = ScrollTrigger.getAll() as ScrollTriggerInstance[];
+      allTriggers.forEach((st: ScrollTriggerInstance) => {
+        if (st.trigger === section) st.kill();
+      });
     };
   }, []);
 
   return (
-    <section 
+    <section
       ref={sectionRef}
-      className="w-full bg-broco-bg py-[10vh]"
+      id="testimonials"
+      className="section-pinned bg-broco-bg flex flex-col items-center justify-center pt-[10vh]"
     >
-      <div className="w-[92vw] mx-auto">
+      <div className="w-[92vw] mx-auto flex flex-col items-center">
         {/* Heading */}
-        <h2 
+        <h2
           ref={headingRef}
-          className="headline-lg font-display font-bold text-broco-text text-center mb-[6vh]"
+          className="headline-lg font-display font-bold text-broco-text text-center mb-[8vh] will-change-transform"
         >
           Loved by designers.
         </h2>
 
         {/* Testimonial Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-[clamp(14px,1.6vw,22px)]">
+        <div
+          ref={cardsContainerRef}
+          className="grid grid-cols-1 md:grid-cols-3 gap-[clamp(14px,1.6vw,22px)] w-full will-change-transform"
+        >
           {testimonials.map((testimonial, index) => (
             <div
               key={testimonial.name}
@@ -105,7 +127,7 @@ export const TestimonialsSection = () => {
                   "{testimonial.quote}"
                 </p>
                 <div className="flex items-center gap-3">
-                  <img 
+                  <img
                     src={testimonial.avatar}
                     alt={testimonial.name}
                     className="w-12 h-12 object-cover"
