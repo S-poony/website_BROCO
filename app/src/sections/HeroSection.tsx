@@ -27,7 +27,7 @@ export const HeroSection = () => {
 
     const gsap = window.gsap;
     const ScrollTrigger = window.ScrollTrigger;
-    
+
     gsap.registerPlugin(ScrollTrigger);
 
     // Get headline lines for stagger
@@ -35,25 +35,25 @@ export const HeroSection = () => {
 
     // AUTO-PLAY ENTRANCE ANIMATION (on page load)
     const entranceTl = gsap.timeline({ defaults: { ease: 'power2.out' } });
-    
+
     entranceTl
-      .fromTo(rule, 
-        { scaleY: 0 }, 
+      .fromTo(rule,
+        { scaleY: 0 },
         { scaleY: 1, duration: 0.6, transformOrigin: 'top' }
       )
-      .fromTo(headlineLines, 
-        { y: 40, opacity: 0 }, 
-        { y: 0, opacity: 1, duration: 0.7, stagger: 0.08 }, 
+      .fromTo(headlineLines,
+        { y: 40, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.7, stagger: 0.08 },
         '-=0.3'
       )
-      .fromTo(tile, 
-        { x: '12vw', opacity: 0, scale: 0.98 }, 
-        { x: 0, opacity: 1, scale: 1, duration: 0.9 }, 
+      .fromTo(tile,
+        { x: '12vw', opacity: 0, scale: 0.98 },
+        { x: 0, opacity: 1, scale: 1, duration: 0.9 },
         '-=0.5'
       )
-      .fromTo(cta, 
-        { y: 18, opacity: 0 }, 
-        { y: 0, opacity: 1, duration: 0.5 }, 
+      .fromTo(cta,
+        { y: 18, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.5 },
         '-=0.4'
       );
 
@@ -69,32 +69,39 @@ export const HeroSection = () => {
           // Reset to visible when scrolling back to top
           gsap.set(headlineLines, { x: 0, opacity: 1 });
           gsap.set(tile, { x: 0, opacity: 1 });
-          gsap.set(rule, { scaleY: 1, opacity: 1 });
+          gsap.set(rule, { scaleY: 1, opacity: 1, transformOrigin: 'top' });
           gsap.set(cta, { opacity: 1 });
         }
       }
     });
 
-    // EXIT PHASE (70% - 100%)
+    // Animate rule immediately as user scrolls
+    scrollTl.to(rule, {
+      scaleY: 0.5,
+      opacity: 0.2,
+      transformOrigin: 'top',
+      ease: 'none'
+    }, 0);
+
+    // EXIT PHASE (70% - 100%) for main content
     scrollTl
-      .fromTo(headline, 
-        { x: 0, opacity: 1 }, 
-        { x: '-18vw', opacity: 0, ease: 'power2.in' }, 
+      .fromTo(headline,
+        { x: 0, opacity: 1 },
+        { x: '-18vw', opacity: 0, ease: 'power2.in' },
         0.7
       )
-      .fromTo(tile, 
-        { x: 0, opacity: 1 }, 
-        { x: '18vw', opacity: 0, ease: 'power2.in' }, 
+      .fromTo(tile,
+        { x: 0, opacity: 1 },
+        { x: '18vw', opacity: 0, ease: 'power2.in' },
         0.7
       )
-      .fromTo(rule, 
-        { scaleY: 1, opacity: 1 }, 
-        { scaleY: 0.2, opacity: 0, ease: 'power2.in' }, 
+      .to(rule,
+        { scaleY: 0, opacity: 0, ease: 'power2.in' },
         0.7
       )
-      .fromTo(cta, 
-        { opacity: 1 }, 
-        { opacity: 0, ease: 'power2.in' }, 
+      .fromTo(cta,
+        { opacity: 1 },
+        { opacity: 0, ease: 'power2.in' },
         0.75
       );
 
@@ -107,14 +114,14 @@ export const HeroSection = () => {
   }, []);
 
   return (
-    <section 
+    <section
       ref={sectionRef}
       className="section-pinned bg-broco-bg flex items-center justify-center"
     >
       {/* Vertical Rule - lower z-index */}
-      <Rule 
+      <Rule
         ref={ruleRef}
-        orientation="vertical" 
+        orientation="vertical"
         className="absolute left-1/2 top-[10vh] h-[80vh] -translate-x-1/2 z-[1]"
       />
 
@@ -122,7 +129,7 @@ export const HeroSection = () => {
       <div className="absolute left-[4vw] top-[18vh] w-[40vw] z-[3]">
         {/* Label */}
         <p className="label-mono mb-4">BROCO — Layout Editor</p>
-        
+
         {/* Headline */}
         <div ref={headlineRef} className="mb-8">
           <h1 className="headline-xl font-display font-bold text-broco-text">
@@ -136,7 +143,7 @@ export const HeroSection = () => {
 
         {/* CTA Row */}
         <div ref={ctaRef} className="flex items-center gap-4">
-          <a 
+          <a
             href="https://github.com/s-poony/BROCO/releases"
             target="_blank"
             rel="noopener noreferrer"
@@ -145,7 +152,7 @@ export const HeroSection = () => {
             <Download className="w-5 h-5" />
             Download
           </a>
-          <a 
+          <a
             href="https://github.com/s-poony/BROCO"
             target="_blank"
             rel="noopener noreferrer"
@@ -158,13 +165,13 @@ export const HeroSection = () => {
       </div>
 
       {/* Right Hero Tile */}
-      <div 
+      <div
         ref={tileRef}
         className="absolute left-[52vw] top-[14vh] w-[72vh] h-[72vh] z-[2] will-change-transform"
       >
         <Tile className="w-full h-full" noHover>
-          <img 
-            src="/images/layoutMadeEasy.jpg" 
+          <img
+            src="/images/layoutMadeEasy.jpg"
             alt="Creative workspace"
             className="broco-img"
           />
