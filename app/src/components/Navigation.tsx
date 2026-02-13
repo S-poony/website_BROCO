@@ -17,7 +17,22 @@ export const Navigation: React.FC = () => {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      const ScrollTrigger = (window as any).ScrollTrigger;
+      if (ScrollTrigger) {
+        // Force a refresh to ensure all positions are up-to-date
+        ScrollTrigger.refresh();
+        const allTriggers = ScrollTrigger.getAll();
+        const st = allTriggers.find((t: any) => t.trigger === element && (t.vars && t.vars.pin)) ||
+          allTriggers.find((t: any) => t.trigger === element);
+        if (st && typeof st.start === 'number') {
+          window.scrollTo({ top: st.start, behavior: 'smooth' });
+          return;
+        }
+      }
+      // Fallback: manually calculate position accounting for potential pinning offsets
+      const rect = element.getBoundingClientRect();
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      window.scrollTo({ top: rect.top + scrollTop, behavior: 'smooth' });
     }
   };
 
@@ -42,7 +57,7 @@ export const Navigation: React.FC = () => {
         {/* Nav Links */}
         <div className="hidden md:flex items-center gap-8">
           <button
-            onClick={() => scrollToSection('features')}
+            onClick={() => scrollToSection('gallery')}
             className="font-display font-medium text-sm link-animated"
           >
             Gallery

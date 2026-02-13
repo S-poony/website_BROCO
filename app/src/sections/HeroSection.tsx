@@ -116,6 +116,7 @@ export const HeroSection = () => {
   return (
     <section
       ref={sectionRef}
+      id="hero"
       className="section-pinned bg-broco-bg flex items-center justify-center"
     >
       {/* Vertical Rule - lower z-index */}

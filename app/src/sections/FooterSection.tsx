@@ -4,7 +4,7 @@ import { Send, Github } from 'lucide-react';
 const footerLinks = {
   Product: [
     { label: 'Download', href: 'https://github.com/s-poony/BROCO/releases' },
-    { label: 'Features', href: '#features' },
+    { label: 'Gallery', href: '#gallery' },
     { label: 'Changelog', href: 'https://github.com/s-poony/BROCO/releases' },
   ],
   Resources: [
@@ -75,6 +75,7 @@ export const FooterSection = () => {
   return (
     <footer
       ref={sectionRef}
+      id="footer"
       className="w-full bg-broco-dark py-[10vh]"
     >
       {/* Modal for License/Privacy */}
