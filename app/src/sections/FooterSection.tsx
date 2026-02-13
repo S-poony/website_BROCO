@@ -117,25 +117,6 @@ export const FooterSection = () => {
             <p className="body-text text-white/70 mb-6">
               Get the latest release, or try the web demo.
             </p>
-
-            {/* Email Form */}
-            <form onSubmit={handleSubmit} className="flex gap-3">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Email address"
-                className="flex-1 bg-white/10 border border-white/20 px-5 py-3 text-white placeholder:text-white/50 font-sans text-sm focus:outline-none focus:border-[var(--color-primary)] transition-colors"
-                required
-              />
-              <button
-                type="submit"
-                className="btn-primary flex items-center gap-2"
-              >
-                <Send className="w-4 h-4" />
-                Get updates
-              </button>
-            </form>
           </div>
 
           {/* Right Links Block */}
