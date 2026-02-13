@@ -3,11 +3,7 @@ import { Tile } from '@/components/Tile';
 import { Rule } from '@/components/Rule';
 import { Download, Github } from 'lucide-react';
 
-// Type for ScrollTrigger instance
-interface ScrollTriggerInstance {
-  trigger?: unknown;
-  kill: () => void;
-}
+
 
 export const HeroSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -30,87 +26,84 @@ export const HeroSection = () => {
 
     gsap.registerPlugin(ScrollTrigger);
 
-    // Get headline lines for stagger
-    const headlineLines = headline.querySelectorAll('.headline-line');
+    const ctx = gsap.context(() => {
+      // Get headline lines for stagger
+      const headlineLines = headline.querySelectorAll('.headline-line');
 
-    // AUTO-PLAY ENTRANCE ANIMATION (on page load)
-    const entranceTl = gsap.timeline({ defaults: { ease: 'power2.out' } });
+      // AUTO-PLAY ENTRANCE ANIMATION (on page load)
+      const entranceTl = gsap.timeline({ defaults: { ease: 'power2.out' } });
 
-    entranceTl
-      .fromTo(rule,
-        { scaleY: 0 },
-        { scaleY: 1, duration: 0.6, transformOrigin: 'top' }
-      )
-      .fromTo(headlineLines,
-        { y: 40, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.7, stagger: 0.08 },
-        '-=0.3'
-      )
-      .fromTo(tile,
-        { x: '12vw', opacity: 0, scale: 0.98 },
-        { x: 0, opacity: 1, scale: 1, duration: 0.9 },
-        '-=0.5'
-      )
-      .fromTo(cta,
-        { y: 18, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.5 },
-        '-=0.4'
-      );
+      entranceTl
+        .fromTo(rule,
+          { scaleY: 0 },
+          { scaleY: 1, duration: 0.6, transformOrigin: 'top' }
+        )
+        .fromTo(headlineLines,
+          { y: 40, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.7, stagger: 0.08 },
+          '-=0.3'
+        )
+        .fromTo(tile,
+          { x: '12vw', opacity: 0, scale: 0.98 },
+          { x: 0, opacity: 1, scale: 1, duration: 0.9 },
+          '-=0.5'
+        )
+        .fromTo(cta,
+          { y: 18, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.5 },
+          '-=0.4'
+        );
 
-    // SCROLL-DRIVEN EXIT ANIMATION
-    const scrollTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: section,
-        start: 'top top',
-        end: '+=130%',
-        pin: true,
-        scrub: 0.6,
-        onLeaveBack: () => {
-          // Reset to visible when scrolling back to top
-          gsap.set(headlineLines, { x: 0, opacity: 1 });
-          gsap.set(tile, { x: 0, opacity: 1 });
-          gsap.set(rule, { scaleY: 1, opacity: 1, transformOrigin: 'top' });
-          gsap.set(cta, { opacity: 1 });
+      // SCROLL-DRIVEN EXIT ANIMATION
+      const scrollTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: 'top top',
+          end: '+=130%',
+          pin: true,
+          scrub: 0.6,
+          onLeaveBack: () => {
+            // Reset to visible when scrolling back to top
+            gsap.set(headlineLines, { x: 0, opacity: 1 });
+            gsap.set(tile, { x: 0, opacity: 1 });
+            gsap.set(rule, { scaleY: 1, opacity: 1, transformOrigin: 'top' });
+            gsap.set(cta, { opacity: 1 });
+          }
         }
-      }
-    });
-
-    // Animate rule immediately as user scrolls
-    scrollTl.to(rule, {
-      scaleY: 0.5,
-      opacity: 0.2,
-      transformOrigin: 'top',
-      ease: 'none'
-    }, 0);
-
-    // EXIT PHASE (70% - 100%) for main content
-    scrollTl
-      .fromTo(headline,
-        { x: 0, opacity: 1 },
-        { x: '-18vw', opacity: 0, ease: 'power2.in' },
-        0.7
-      )
-      .fromTo(tile,
-        { x: 0, opacity: 1 },
-        { x: '18vw', opacity: 0, ease: 'power2.in' },
-        0.7
-      )
-      .to(rule,
-        { scaleY: 0, opacity: 0, ease: 'power2.in' },
-        0.7
-      )
-      .fromTo(cta,
-        { opacity: 1 },
-        { opacity: 0, ease: 'power2.in' },
-        0.75
-      );
-
-    return () => {
-      const allTriggers = ScrollTrigger.getAll() as ScrollTriggerInstance[];
-      allTriggers.forEach((st: ScrollTriggerInstance) => {
-        if (st.trigger === section) st.kill();
       });
-    };
+
+      // Animate rule immediately as user scrolls
+      scrollTl.to(rule, {
+        scaleY: 0.5,
+        opacity: 0.2,
+        transformOrigin: 'top',
+        ease: 'none'
+      }, 0);
+
+      // EXIT PHASE (70% - 100%) for main content
+      scrollTl
+        .fromTo(headline,
+          { x: 0, opacity: 1 },
+          { x: '-18vw', opacity: 0, ease: 'power2.in' },
+          0.7
+        )
+        .fromTo(tile,
+          { x: 0, opacity: 1 },
+          { x: '18vw', opacity: 0, ease: 'power2.in' },
+          0.7
+        )
+        .to(rule,
+          { scaleY: 0, opacity: 0, ease: 'power2.in' },
+          0.7
+        )
+        .fromTo(cta,
+          { opacity: 1 },
+          { opacity: 0, ease: 'power2.in' },
+          0.75
+        );
+    }, sectionRef); // Scope to section
+
+    return () => ctx.revert();
   }, []);
 
   return (

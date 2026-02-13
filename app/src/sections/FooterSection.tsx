@@ -31,39 +31,39 @@ export const FooterSection = () => {
 
     gsap.registerPlugin(ScrollTrigger);
 
-    // CTA reveal
-    gsap.fromTo(cta,
-      { y: 24, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        scrollTrigger: {
-          trigger: cta,
-          start: 'top 85%',
-          end: 'top 60%',
-          scrub: 0.5,
+    const ctx = gsap.context(() => {
+      // CTA reveal
+      gsap.fromTo(cta,
+        { y: 24, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          scrollTrigger: {
+            trigger: cta,
+            start: 'top 85%',
+            end: 'top 60%',
+            scrub: 0.5,
+          }
         }
-      }
-    );
+      );
 
-    // Links reveal
-    gsap.fromTo(links,
-      { y: 16, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        scrollTrigger: {
-          trigger: links,
-          start: 'top 90%',
-          end: 'top 65%',
-          scrub: 0.5,
+      // Links reveal
+      gsap.fromTo(links,
+        { y: 16, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          scrollTrigger: {
+            trigger: links,
+            start: 'top 90%',
+            end: 'top 65%',
+            scrub: 0.5,
+          }
         }
-      }
-    );
+      );
+    }, sectionRef); // Scope to section
 
-    return () => {
-      ScrollTrigger.getAll().forEach((st: { kill: () => void }) => st.kill());
-    };
+    return () => ctx.revert();
   }, []);
 
   const handleSubmit = (e: React.FormEvent) => {

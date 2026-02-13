@@ -26,11 +26,7 @@ const galleryItems = [
   },
 ];
 
-// Type for ScrollTrigger instance
-interface ScrollTriggerInstance {
-  trigger?: unknown;
-  kill: () => void;
-}
+
 
 export const GalleryMosaicSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -53,72 +49,69 @@ export const GalleryMosaicSection = () => {
 
     gsap.registerPlugin(ScrollTrigger);
 
-    const scrollTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: section,
-        start: 'top top',
-        end: '+=130%',
-        pin: true,
-        scrub: 0.6,
-      }
-    });
-
-    // ENTRANCE (0% - 30%)
-    scrollTl
-      .fromTo(title,
-        { x: '-18vw', opacity: 0 },
-        { x: 0, opacity: 1, ease: 'none' },
-        0
-      )
-      .fromTo(rule,
-        { scaleY: 0 },
-        { scaleY: 1, ease: 'none', transformOrigin: 'top' },
-        0
-      );
-
-    // Mosaic tiles from edges (TL, TR, BL, BR)
-    const tileDirections = [
-      { x: '-20vw', y: '-16vh' },
-      { x: '20vw', y: '-16vh' },
-      { x: '-20vw', y: '16vh' },
-      { x: '20vw', y: '16vh' },
-    ];
-
-    tileItems.forEach((tile, i) => {
-      scrollTl.fromTo(tile,
-        { x: tileDirections[i].x, y: tileDirections[i].y, opacity: 0, scale: 0.96 },
-        { x: 0, y: 0, opacity: 1, scale: 1, ease: 'none' },
-        0.02 + i * 0.02
-      );
-    });
-
-    // Set to 30%
-    scrollTl.to({}, {}, 0.3);
-
-    // EXIT (70% - 100%)
-    scrollTl
-      .fromTo(title,
-        { x: 0, opacity: 1 },
-        { x: '-10vw', opacity: 0, ease: 'power2.in' },
-        0.7
-      )
-      .fromTo(mosaic,
-        { x: 0, opacity: 1 },
-        { x: '18vw', opacity: 0, ease: 'power2.in' },
-        0.7
-      )
-      .fromTo(rule,
-        { scaleY: 1, opacity: 1 },
-        { scaleY: 0.2, opacity: 0, ease: 'power2.in' },
-        0.7
-      );
-
-    return () => {
-      const allTriggers = ScrollTrigger.getAll() as ScrollTriggerInstance[];
-      allTriggers.forEach((st: ScrollTriggerInstance) => {
-        if (st.trigger === section) st.kill();
+    const ctx = gsap.context(() => {
+      const scrollTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: 'top top',
+          end: '+=130%',
+          pin: true,
+          scrub: 0.6,
+        }
       });
-    };
+
+      // ENTRANCE (0% - 30%)
+      scrollTl
+        .fromTo(title,
+          { x: '-18vw', opacity: 0 },
+          { x: 0, opacity: 1, ease: 'none' },
+          0
+        )
+        .fromTo(rule,
+          { scaleY: 0 },
+          { scaleY: 1, ease: 'none', transformOrigin: 'top' },
+          0
+        );
+
+      // Mosaic tiles from edges (TL, TR, BL, BR)
+      const tileDirections = [
+        { x: '-20vw', y: '-16vh' },
+        { x: '20vw', y: '-16vh' },
+        { x: '-20vw', y: '16vh' },
+        { x: '20vw', y: '16vh' },
+      ];
+
+      tileItems.forEach((tile, i) => {
+        scrollTl.fromTo(tile,
+          { x: tileDirections[i].x, y: tileDirections[i].y, opacity: 0, scale: 0.96 },
+          { x: 0, y: 0, opacity: 1, scale: 1, ease: 'none' },
+          0.02 + i * 0.02
+        );
+      });
+
+      // Set to 30%
+      scrollTl.to({}, {}, 0.3);
+
+      // EXIT (70% - 100%)
+      scrollTl
+        .fromTo(title,
+          { x: 0, opacity: 1 },
+          { x: '-10vw', opacity: 0, ease: 'power2.in' },
+          0.7
+        )
+        .fromTo(mosaic,
+          { x: 0, opacity: 1 },
+          { x: '18vw', opacity: 0, ease: 'power2.in' },
+          0.7
+        )
+        .fromTo(rule,
+          { scaleY: 1, opacity: 1 },
+          { scaleY: 0.2, opacity: 0, ease: 'power2.in' },
+          0.7
+        );
+    }, sectionRef); // Scope to section
+
+    return () => ctx.revert();
   }, []);
 
   return (
