@@ -22,17 +22,17 @@ export const Navigation: React.FC = () => {
   };
 
   return (
-    <nav 
+    <nav
       className={cn(
         'fixed top-0 left-0 right-0 z-[100] transition-all duration-300',
-        isScrolled 
-          ? 'bg-broco-bg/90 backdrop-blur-md py-4' 
+        isScrolled
+          ? 'bg-broco-bg/90 backdrop-blur-md py-4'
           : 'bg-transparent py-6'
       )}
     >
       <div className="w-full px-[clamp(16px,2.2vw,28px)] flex items-center justify-between">
         {/* Logo */}
-        <button 
+        <button
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           className="font-display font-bold text-xl tracking-tight text-broco-text hover:text-broco-accent transition-colors"
         >
@@ -41,19 +41,22 @@ export const Navigation: React.FC = () => {
 
         {/* Nav Links */}
         <div className="hidden md:flex items-center gap-8">
-          <button 
+          <button
             onClick={() => scrollToSection('features')}
             className="font-display font-medium text-sm link-animated"
           >
             Gallery
           </button>
-          <button 
-            onClick={() => scrollToSection('download')}
-            className="font-display font-medium text-sm link-animated"
+          <a
+            href="https://github.com/s-poony/BROCO/releases"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-display font-medium text-sm flex items-center gap-1.5 link-animated"
           >
+            <Download className="w-4 h-4" />
             Download
-          </button>
-          <a 
+          </a>
+          <a
             href="https://github.com/s-poony/BROCO"
             target="_blank"
             rel="noopener noreferrer"
@@ -65,7 +68,7 @@ export const Navigation: React.FC = () => {
         </div>
 
         {/* CTA */}
-        <a 
+        <a
           href="https://s-poony.github.io/BROCO/"
           target="_blank"
           rel="noopener noreferrer"

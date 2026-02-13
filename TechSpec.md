@@ -16,14 +16,8 @@
 
 **Section Components**
 - `HeroSection` — Section 1 (split hero with auto-play entrance)
-- `FeatureHighlightSection` — Section 2 (big tile + text)
-- `ThreeUpFeatures` — Section 3 (flowing, 3 cards)
-- `DeepFeatureSection` — Section 4 (tall tile + text)
-- `WorkflowSection` — Section 5 (steps)
-- `GalleryMosaicSection` — Section 6 (2×2 grid)
-- `DarkFeatureSection` — Section 7 (dark bg CTA)
-- `TestimonialsSection` — Section 8 (flowing, 3 cards)
-- `FooterSection` — Section 9 (CTA + links)
+- `GalleryMosaicSection` — Section 2 (2×2 grid)
+- `FooterSection` — Section 3 (CTA + links)
 
 **Animation Components**
 - `SplitText` — character/word split for headlines (custom implementation)
@@ -39,12 +33,7 @@
 | **Headline character split** | Custom + GSAP | Split text into spans, animate y/opacity with stagger | Medium |
 | **Vertical rule draw** | GSAP | scaleY from 0→1, transform-origin: top | Low |
 | **Horizontal rule draw** | GSAP | scaleX from 0→1, transform-origin: left | Low |
-| **Tile slide + scale entrance** | GSAP ScrollTrigger | fromTo with x/y/opacity/scale, scrub: 0.6 | Medium |
-| **Tile slide exit** | GSAP ScrollTrigger | fromTo with x/opacity, keep visible until 95% | Medium |
-| **Text block slide** | GSAP ScrollTrigger | fromTo with x/opacity | Low |
 | **Mosaic tiles stagger** | GSAP ScrollTrigger | Each tile from nearest edge, stagger 0.06 | Medium |
-| **Steps stagger** | GSAP ScrollTrigger | Stagger fromTo with x/opacity | Low |
-| **Cards reveal (flowing)** | GSAP ScrollTrigger | Scrubbed fromTo, y/opacity/scale | Low |
 | **Button hover states** | CSS/Tailwind | translateY + scale transitions | Low |
 | **Link underline reveal** | CSS | ::after scaleX transform | Low |
 | **Global scroll snap** | GSAP ScrollTrigger | Derive pinned ranges, snap to settle centers | High |
