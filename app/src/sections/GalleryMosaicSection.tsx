@@ -55,8 +55,6 @@ export const GalleryMosaicSection = () => {
           end: '+=130%',
           pin: true,
           scrub: 0.3,
-          onLeave: () => gsap.set(section, { autoAlpha: 0 }),
-          onEnterBack: () => gsap.set(section, { autoAlpha: 1 }),
         }
       });
 
@@ -94,21 +92,25 @@ export const GalleryMosaicSection = () => {
 
       // ── EXIT  (0.7 → 1.0) ────────────────────────────────
       scrollTl
-        .to(title,
+        .fromTo(title,
+          { x: 0, opacity: 1 },
           { x: '-10vw', opacity: 0, ease: 'power2.in' },
           0.7
         )
-        .to(mosaic,
-          { x: '18vw', autoAlpha: 0, ease: 'power2.in' },
+        .fromTo(mosaic,
+          { x: 0, opacity: 1 },
+          { x: '18vw', opacity: 0, ease: 'power2.in' },
           0.7
         )
-        .to(rule,
+        .fromTo(rule,
+          { scaleY: 1, opacity: 1 },
           { scaleY: 0.2, opacity: 0, ease: 'power2.in' },
           0.7
         )
         // Fade the entire section out at the tail end
-        .to(section,
-          { autoAlpha: 0, ease: 'power1.in' },
+        .fromTo(section,
+          { opacity: 1 },
+          { opacity: 0, ease: 'power1.in' },
           0.88
         );
     }, sectionRef);

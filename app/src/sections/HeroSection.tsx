@@ -59,40 +59,42 @@ export const HeroSection = () => {
           end: '+=130%',
           pin: true,
           scrub: 0.3,
-          onLeave: () => gsap.set(section, { autoAlpha: 0 }),
-          onEnterBack: () => gsap.set(section, { autoAlpha: 1 }),
         }
       });
 
       // Rule dims as scroll begins
-      scrollTl.to(rule, {
-        scaleY: 0.5,
-        opacity: 0.2,
-        transformOrigin: 'top',
-        ease: 'none'
-      }, 0);
+      scrollTl.fromTo(rule,
+        { scaleY: 1, opacity: 1 },
+        { scaleY: 0.5, opacity: 0.2, transformOrigin: 'top', ease: 'none' },
+        0
+      );
 
       // ── EXIT PHASE (0.7 → 1.0) ───────────────────────────
       scrollTl
-        .to(headline,
+        .fromTo(headline,
+          { x: 0, opacity: 1 },
           { x: '-18vw', opacity: 0, ease: 'power2.in' },
           0.7
         )
-        .to(tile,
+        .fromTo(tile,
+          { x: 0, opacity: 1 },
           { x: '18vw', opacity: 0, ease: 'power2.in' },
           0.7
         )
-        .to(rule,
+        .fromTo(rule,
+          { scaleY: 0.5, opacity: 0.2 },
           { scaleY: 0, opacity: 0, ease: 'power2.in' },
           0.7
         )
-        .to(cta,
+        .fromTo(cta,
+          { opacity: 1 },
           { opacity: 0, ease: 'power2.in' },
           0.75
         )
         // Fade the entire section out at the tail end
-        .to(section,
-          { autoAlpha: 0, ease: 'power1.in' },
+        .fromTo(section,
+          { opacity: 1 },
+          { opacity: 0, ease: 'power1.in' },
           0.88
         );
     }, sectionRef);
