@@ -1,5 +1,5 @@
 import { useRef, useLayoutEffect, useState } from 'react';
-import { Send, Github } from 'lucide-react';
+import { Github } from 'lucide-react';
 
 const footerLinks = {
   Product: [
@@ -17,7 +17,7 @@ export const FooterSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
   const linksRef = useRef<HTMLDivElement>(null);
-  const [email, setEmail] = useState('');
+
   const [showModal, setShowModal] = useState<'license' | 'privacy' | null>(null);
 
   useLayoutEffect(() => {
@@ -66,11 +66,7 @@ export const FooterSection = () => {
     return () => ctx.revert();
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    alert('Thanks for subscribing! We\'ll keep you updated on BROCO releases.');
-    setEmail('');
-  };
+
 
   return (
     <footer
