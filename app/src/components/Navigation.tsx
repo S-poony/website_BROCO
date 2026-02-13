@@ -24,8 +24,18 @@ export const Navigation: React.FC = () => {
         const allTriggers = ScrollTrigger.getAll();
         const st = allTriggers.find((t: any) => t.trigger === element && (t.vars && t.vars.pin)) ||
           allTriggers.find((t: any) => t.trigger === element);
-        if (st && typeof st.start === 'number') {
-          window.scrollTo({ top: st.start, behavior: 'smooth' });
+        if (st && typeof st.start === 'number' && typeof st.end === 'number') {
+          // ROBUST REVEAL LOGIC:
+          // Pinned sections usually have entrance/exit animations. 
+          // We want to land in the "settled" state (usually around the middle).
+          // Defaults: 50% for pinned sections, 0% for standard ones.
+          // Can be overridden via data-scroll-reveal attribute (0.0 to 1.0)
+          const revealPercent = element.dataset.scrollReveal
+            ? parseFloat(element.dataset.scrollReveal)
+            : (st.vars && st.vars.pin ? 0.5 : 0);
+
+          const targetScroll = st.start + (st.end - st.start) * revealPercent;
+          window.scrollTo({ top: targetScroll, behavior: 'smooth' });
           return;
         }
       }

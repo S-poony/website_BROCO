@@ -4,25 +4,25 @@ import { Rule } from '@/components/Rule';
 import { ArrowRight } from 'lucide-react';
 
 const galleryItems = [
-  { 
+  {
     type: 'gif' as const,
-    src: '/images/gif_layouts.gif', 
-    alt: 'Create multiple layouts in one document' 
+    src: '/images/gif_layouts.gif',
+    alt: 'Create multiple layouts in one document'
   },
-  { 
+  {
     type: 'image' as const,
-    src: '/images/broco_screen.png', 
-    alt: 'BROCO application interface' 
+    src: '/images/broco_screen.png',
+    alt: 'BROCO application interface'
   },
-  { 
+  {
     type: 'gif' as const,
-    src: '/images/gif_aspect_ratio.gif', 
-    alt: 'Change aspect ratio easily' 
+    src: '/images/gif_aspect_ratio.gif',
+    alt: 'Change aspect ratio easily'
   },
-  { 
+  {
     type: 'gif' as const,
-    src: '/images/gif_import.gif', 
-    alt: 'Import files fast' 
+    src: '/images/gif_import.gif',
+    alt: 'Import files fast'
   },
 ];
 
@@ -50,7 +50,7 @@ export const GalleryMosaicSection = () => {
 
     const gsap = window.gsap;
     const ScrollTrigger = window.ScrollTrigger;
-    
+
     gsap.registerPlugin(ScrollTrigger);
 
     const scrollTl = gsap.timeline({
@@ -65,14 +65,14 @@ export const GalleryMosaicSection = () => {
 
     // ENTRANCE (0% - 30%)
     scrollTl
-      .fromTo(title, 
-        { x: '-18vw', opacity: 0 }, 
-        { x: 0, opacity: 1, ease: 'none' }, 
+      .fromTo(title,
+        { x: '-18vw', opacity: 0 },
+        { x: 0, opacity: 1, ease: 'none' },
         0
       )
-      .fromTo(rule, 
-        { scaleY: 0 }, 
-        { scaleY: 1, ease: 'none', transformOrigin: 'top' }, 
+      .fromTo(rule,
+        { scaleY: 0 },
+        { scaleY: 1, ease: 'none', transformOrigin: 'top' },
         0
       );
 
@@ -97,19 +97,19 @@ export const GalleryMosaicSection = () => {
 
     // EXIT (70% - 100%)
     scrollTl
-      .fromTo(title, 
-        { x: 0, opacity: 1 }, 
-        { x: '-10vw', opacity: 0, ease: 'power2.in' }, 
+      .fromTo(title,
+        { x: 0, opacity: 1 },
+        { x: '-10vw', opacity: 0, ease: 'power2.in' },
         0.7
       )
-      .fromTo(mosaic, 
-        { x: 0, opacity: 1 }, 
-        { x: '18vw', opacity: 0, ease: 'power2.in' }, 
+      .fromTo(mosaic,
+        { x: 0, opacity: 1 },
+        { x: '18vw', opacity: 0, ease: 'power2.in' },
         0.7
       )
-      .fromTo(rule, 
-        { scaleY: 1, opacity: 1 }, 
-        { scaleY: 0.2, opacity: 0, ease: 'power2.in' }, 
+      .fromTo(rule,
+        { scaleY: 1, opacity: 1 },
+        { scaleY: 0.2, opacity: 0, ease: 'power2.in' },
         0.7
       );
 
@@ -122,27 +122,28 @@ export const GalleryMosaicSection = () => {
   }, []);
 
   return (
-    <section 
+    <section
       ref={sectionRef}
       id="gallery"
+      data-scroll-reveal="0.5"
       className="section-pinned bg-broco-bg flex items-center justify-center"
     >
       {/* Vertical Rule - lower z-index */}
-      <Rule 
+      <Rule
         ref={ruleRef}
-        orientation="vertical" 
+        orientation="vertical"
         className="absolute left-[42vw] top-[10vh] h-[80vh] z-[1]"
       />
 
       {/* Left Title */}
-      <div 
+      <div
         ref={titleRef}
         className="absolute left-[6vw] top-[26vh] w-[30vw] z-[3] will-change-transform"
       >
         <h2 className="headline-lg font-display font-bold text-broco-text mb-6">
           One canvas.<br />Many layouts.
         </h2>
-        <a 
+        <a
           href="https://s-poony.github.io/BROCO/"
           target="_blank"
           rel="noopener noreferrer"
@@ -154,7 +155,7 @@ export const GalleryMosaicSection = () => {
       </div>
 
       {/* 2x2 Mosaic */}
-      <div 
+      <div
         ref={mosaicRef}
         className="absolute left-[44vw] top-[14vh] w-[50vw] h-[72vh] z-[2] will-change-transform"
       >
@@ -167,13 +168,13 @@ export const GalleryMosaicSection = () => {
             >
               <Tile className="w-full h-full overflow-hidden" noHover>
                 {item.type === 'gif' ? (
-                  <img 
+                  <img
                     src={item.src}
                     alt={item.alt}
                     className="broco-img"
                   />
                 ) : (
-                  <img 
+                  <img
                     src={item.src}
                     alt={item.alt}
                     className="broco-img object-contain bg-broco-bg"
