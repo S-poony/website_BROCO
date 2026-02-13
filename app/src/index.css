@@ -185,6 +185,22 @@
   }
 }
 
+/* Mobile Adjustments */
+@media (max-width: 767px) {
+  .section-pinned {
+    min-height: 100svh;
+    height: auto;
+  }
+
+  .headline-xl {
+    font-size: clamp(36px, 10vw, 52px);
+  }
+
+  .headline-lg {
+    font-size: clamp(28px, 7vw, 40px);
+  }
+}
+
 /* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
 
