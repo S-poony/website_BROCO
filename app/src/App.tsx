@@ -29,6 +29,8 @@ interface PinnedRange {
 
 function App() {
   useEffect(() => {
+    let snapTrigger: ScrollTriggerInstance | null = null;
+
     // Wait for all sections to mount and register their ScrollTriggers
     const timer = setTimeout(() => {
       const gsap = window.gsap;
@@ -54,7 +56,7 @@ function App() {
       }));
 
       // Create global snap
-      ScrollTrigger.create({
+      snapTrigger = ScrollTrigger.create({
         snap: {
           snapTo: (value: number) => {
             // Check if within any pinned range (with small buffer)
@@ -79,7 +81,7 @@ function App() {
           delay: 0,
           ease: 'power2.out',
         }
-      });
+      }) as ScrollTriggerInstance;
 
       // Refresh to ensure all pin-spacers and positions are correct
       ScrollTrigger.refresh();
@@ -87,6 +89,7 @@ function App() {
 
     return () => {
       clearTimeout(timer);
+      if (snapTrigger) snapTrigger.kill();
     };
   }, []);
 

@@ -26,8 +26,6 @@ const galleryItems = [
   },
 ];
 
-
-
 export const GalleryMosaicSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
@@ -56,11 +54,13 @@ export const GalleryMosaicSection = () => {
           start: 'top top',
           end: '+=130%',
           pin: true,
-          scrub: 0.6,
+          scrub: 0.3,
+          onLeave: () => gsap.set(section, { autoAlpha: 0 }),
+          onEnterBack: () => gsap.set(section, { autoAlpha: 1 }),
         }
       });
 
-      // ENTRANCE (0% - 30%)
+      // ── ENTRANCE  (0 → 0.3) ──────────────────────────────
       scrollTl
         .fromTo(title,
           { x: '-18vw', opacity: 0 },
@@ -73,7 +73,7 @@ export const GalleryMosaicSection = () => {
           0
         );
 
-      // Mosaic tiles from edges (TL, TR, BL, BR)
+      // Mosaic tiles fly in from corners (TL, TR, BL, BR)
       const tileDirections = [
         { x: '-20vw', y: '-16vh' },
         { x: '20vw', y: '-16vh' },
@@ -85,31 +85,33 @@ export const GalleryMosaicSection = () => {
         scrollTl.fromTo(tile,
           { x: tileDirections[i].x, y: tileDirections[i].y, opacity: 0, scale: 0.96 },
           { x: 0, y: 0, opacity: 1, scale: 1, ease: 'none' },
-          0.02 + i * 0.02
+          i * 0.02
         );
       });
 
-      // Set to 30%
+      // ── HOLD  (0.3 → 0.7) ────────────────────────────────
       scrollTl.to({}, {}, 0.3);
 
-      // EXIT (70% - 100%)
+      // ── EXIT  (0.7 → 1.0) ────────────────────────────────
       scrollTl
-        .fromTo(title,
-          { x: 0, opacity: 1 },
+        .to(title,
           { x: '-10vw', opacity: 0, ease: 'power2.in' },
           0.7
         )
-        .fromTo(mosaic,
-          { x: 0, opacity: 1 },
-          { x: '18vw', opacity: 0, ease: 'power2.in' },
+        .to(mosaic,
+          { x: '18vw', autoAlpha: 0, ease: 'power2.in' },
           0.7
         )
-        .fromTo(rule,
-          { scaleY: 1, opacity: 1 },
+        .to(rule,
           { scaleY: 0.2, opacity: 0, ease: 'power2.in' },
           0.7
+        )
+        // Fade the entire section out at the tail end
+        .to(section,
+          { autoAlpha: 0, ease: 'power1.in' },
+          0.88
         );
-    }, sectionRef); // Scope to section
+    }, sectionRef);
 
     return () => ctx.revert();
   }, []);

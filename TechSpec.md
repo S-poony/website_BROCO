@@ -10,18 +10,14 @@
 ### Custom Components
 
 **Layout Components**
-- `Tile` — reusable white panel with border/shadow (props: children, className, hasShadow)
-- `Rule` — vertical/horizontal line (props: orientation, className)
-- `SectionWrapper` — handles pin state + ScrollTrigger setup
+- `Tile` — reusable white panel with border/shadow (props: children, className, hasShadow, noHover)
+- `Rule` — vertical/horizontal line (props: orientation, className, light)
+- `Navigation` — fixed top nav with scroll-aware styling and GSAP-aware `scrollToSection`
 
 **Section Components**
-- `HeroSection` — Section 1 (split hero with auto-play entrance)
-- `GalleryMosaicSection` — Section 2 (2×2 grid)
-- `FooterSection` — Section 3 (CTA + links)
-
-**Animation Components**
-- `SplitText` — character/word split for headlines (custom implementation)
-- `AnimatedTile` — tile with entrance/exit animations
+- `HeroSection` — Section 1 (split hero with auto-play entrance + scroll exit)
+- `GalleryMosaicSection` — Section 2 (2×2 mosaic grid with scroll entrance/exit)
+- `FooterSection` — Section 3 (CTA + links, scrub reveal)
 
 ---
 
@@ -33,7 +29,8 @@
 | **Headline character split** | Custom + GSAP | Split text into spans, animate y/opacity with stagger | Medium |
 | **Vertical rule draw** | GSAP | scaleY from 0→1, transform-origin: top | Low |
 | **Horizontal rule draw** | GSAP | scaleX from 0→1, transform-origin: left | Low |
-| **Mosaic tiles stagger** | GSAP ScrollTrigger | Each tile from nearest edge, stagger 0.06 | Medium |
+| **Mosaic tiles stagger** | GSAP ScrollTrigger | Each tile from nearest corner, stagger 0.02 | Medium |
+| **Section autoAlpha exit** | GSAP ScrollTrigger | Section fades to `autoAlpha: 0` at 88–100% to prevent blank space | Medium |
 | **Button hover states** | CSS/Tailwind | translateY + scale transitions | Low |
 | **Link underline reveal** | CSS | ::after scaleX transform | Low |
 | **Global scroll snap** | GSAP ScrollTrigger | Derive pinned ranges, snap to settle centers | High |
@@ -63,31 +60,21 @@
 ```
 app/
 ├── public/
-│   ├── images/           # All lifestyle photos
-│   └── noise.png         # Grain overlay
+│   └── images/           # All lifestyle photos & gifs
 ├── src/
 │   ├── components/
 │   │   ├── ui/           # shadcn components
 │   │   ├── Tile.tsx
 │   │   ├── Rule.tsx
-│   │   ├── SplitText.tsx
 │   │   └── Navigation.tsx
 │   ├── sections/
 │   │   ├── HeroSection.tsx
-│   │   ├── FeatureHighlightSection.tsx
-│   │   ├── ThreeUpFeatures.tsx
-│   │   ├── DeepFeatureSection.tsx
-│   │   ├── WorkflowSection.tsx
 │   │   ├── GalleryMosaicSection.tsx
-│   │   ├── DarkFeatureSection.tsx
-│   │   ├── TestimonialsSection.tsx
 │   │   └── FooterSection.tsx
-│   ├── hooks/
-│   │   └── useScrollTrigger.ts  # Optional helper
 │   ├── lib/
 │   │   └── utils.ts
-│   ├── App.tsx
-│   ├── index.css
+│   ├── App.tsx          # Global snap + section composition
+│   ├── index.css        # Design tokens + component styles
 │   └── main.tsx
 ├── index.html
 ├── tailwind.config.js
@@ -113,20 +100,28 @@ npm install gsap
 
 ### Pinned Section Pattern
 ```tsx
-// Each pinned section follows this structure
-<section className="h-screen w-screen relative overflow-hidden">
-  {/* Content with z-index layering */}
-</section>
+// Each pinned section uses gsap.context for safe cleanup
+const ctx = gsap.context(() => {
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: section,
+      start: 'top top',
+      end: '+=130%',
+      pin: true,
+      scrub: 0.3,
+      // Safety callbacks for fast-scroll edge cases
+      onLeave: () => gsap.set(section, { autoAlpha: 0 }),
+      onEnterBack: () => gsap.set(section, { autoAlpha: 1 }),
+    }
+  });
 
-// ScrollTrigger setup in useEffect
-ScrollTrigger.create({
-  trigger: sectionRef.current,
-  start: "top top",
-  end: "+=130%",
-  pin: true,
-  scrub: 0.6,
-  // animations attached to timeline
-});
+  // Entrance tweens (0 → 0.3)
+  // Hold phase (0.3 → 0.7)
+  // Exit tweens (0.7 → 1.0)
+  // Section autoAlpha fade (0.88 → 1.0)
+}, sectionRef);
+
+return () => ctx.revert();
 ```
 
 ### Hero Auto-Play Entrance
@@ -157,13 +152,13 @@ interface TileProps {
   children: React.ReactNode;
   className?: string;
   hasShadow?: boolean;
+  noHover?: boolean;  // Disable hover lift on gallery tiles
 }
 
 // Styles:
-// - bg-white
-// - border-[3px] border-[#0B0B0D]
-// - rounded-[22px]
-// - shadow: 0 18px 0 rgba(11,11,13,0.10) (if hasShadow)
+// - bg-white, border border-[var(--color-border)]
+// - rounded-none (sharp edges per design system)
+// - Optional hover: shadow-md + translateY(-2px)
 ```
 
 ### Color Tokens (Tailwind)
@@ -182,11 +177,14 @@ colors: {
 
 ## 7. Performance Considerations
 
-- Use `will-change: transform` on animated tiles
+- Use `will-change: transform` on animated elements
 - Keep shadows static (no animated box-shadow)
 - Use transform-only animations (no blur/backdrop-filter)
+- `scrub: 0.3` for responsive scroll tracking without jank
+- `autoAlpha` instead of `opacity` on section exit to prevent blank pin-spacer space
+- `gsap.context()` for safe cleanup on unmount / HMR / StrictMode
 - Lazy load images below fold
-- Respect `prefers-reduced-motion`
+- Respect `prefers-reduced-motion` (CSS transitions handled; GSAP requires manual check)
 
 ---
 
