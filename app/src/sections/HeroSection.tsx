@@ -179,7 +179,7 @@ export const HeroSection = () => {
           <img
             src="/images/layoutMadeEasy.jpg"
             alt="Creative workspace"
-            className="broco-img"
+            className="broco-img object-top"
           />
         </Tile>
       </div>
